@@ -17,18 +17,25 @@ public class CameraScript : NetworkBehaviour
     private bool on_off = true;
     void Start()
     {
+        if(isLocalPlayer == true)
+        {
         transform.position = Pojition;
         transform.rotation = quaternion;
         c = Instantiate(Camera,transform.position,Quaternion.identity);
         c.transform.position = list[0];
         c.transform.rotation = qlist[0];
         GameObject.FindWithTag("Vr").gameObject.SetActive(false);
+
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.X)  && on_off == true)
+
+        if(Input.GetKey(KeyCode.X)  && on_off == true && isLocalPlayer == true)
+
         {
             on_off = false;
             Invoke("On",0.2f);
@@ -52,7 +59,7 @@ public class CameraScript : NetworkBehaviour
             c.transform.position = list[count];
             c.transform.rotation = qlist[count];
         }
-    
+
     }
     void On()
     {
@@ -60,3 +67,4 @@ public class CameraScript : NetworkBehaviour
     }
 
 }
+
