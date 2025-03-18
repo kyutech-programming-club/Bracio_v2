@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Movingfloor : MonoBehaviour
+using Mirror;
+public class Movingfloor : NetworkBehaviour
 {
     public float movingrange;
     public Vector3 movingdirection;
@@ -11,18 +11,20 @@ public class Movingfloor : MonoBehaviour
     private Vector3 Edge1;
     private Vector3 Edge2;
     public  bool isDirection;
+    private bool isStop = false;
 
     // Start is called before the first frame update
     void Start()
     {
         Edge1 = transform.position + movingdirection * movingrange;
         Edge2 = transform.position - movingdirection * movingrange;
-
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(isStop == false)
+        {
         time += Time.deltaTime* speed;
         if(time >= 1)
         {
@@ -37,5 +39,11 @@ public class Movingfloor : MonoBehaviour
         {
             transform.position = Vector3.Lerp(Edge2,Edge1,time);
         }
+        }
+    }
+    public void StopMove()
+    {
+        Debug.Log("AAA");
+        isStop = !isStop;
     }
 }
